@@ -1,4 +1,4 @@
-package com.joshuacotes.guiplotter.indexmodel.symbols;
+package com.joshuacotes.guiplotter.resthandler.functions;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,20 +8,20 @@ import java.net.URLConnection;
 import java.text.ParseException;
 import java.util.*;
 
-public abstract class Symbol implements SymbolElement{
+public abstract class A_AlphaQuery implements I_StockQuery {
 
-    protected String[] _headers;
-    protected String[][] _dailyPrices;
+    protected String[] _headers; // [column id's]
+    protected String[][] _priceList; // [date time][price]
     private String _symbol;
     private String _urlString;
     private int _recordsCount;
 
-    protected Symbol(String symbol){
+    protected A_AlphaQuery(String symbol){
         _symbol = symbol;
         _recordsCount = 0;
     }
 
-    protected String getURL(){
+    public String getURL(){
         return _urlString;
     }
 
@@ -44,7 +44,7 @@ public abstract class Symbol implements SymbolElement{
     }
 
     public String[][] getPrices() {
-        return _dailyPrices;
+        return _priceList;
     }
 
     abstract void queryPricesREST() throws IOException, ParseException;
@@ -68,16 +68,16 @@ public abstract class Symbol implements SymbolElement{
             resultList.add(lineBuffer.split(", *"));
         }
 
-        _dailyPrices = new String[resultList.size()-1][resultList.get(0).length];
+        _priceList = new String[resultList.size()-1][resultList.get(0).length];
         _headers = new String[resultList.get(0).length];
         System.arraycopy(resultList.get(0), 0, _headers, 0, _headers.length);
 
         for(int line = 1; line < resultList.size(); line++)
-            System.arraycopy(resultList.get(line), 0, _dailyPrices[line-1], 0, _dailyPrices[line-1].length);
+            System.arraycopy(resultList.get(line), 0, _priceList[line-1], 0, _priceList[line-1].length);
 
         urlReader.close();
-        _recordsCount = _dailyPrices.length;
-        return _dailyPrices;
+        _recordsCount = _priceList.length;
+        return _priceList;
     }
 
 }

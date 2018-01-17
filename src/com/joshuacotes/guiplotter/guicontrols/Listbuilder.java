@@ -1,4 +1,4 @@
-package com.joshuacotes.guiplotter.builders;
+package com.joshuacotes.guiplotter.guicontrols;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

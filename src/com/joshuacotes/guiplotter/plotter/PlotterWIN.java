@@ -1,4 +1,4 @@
-package com.joshuacotes.guiplotter.indexmodel.plotter;
+package com.joshuacotes.guiplotter.plotter;
 
 import java.io.*;
 import java.util.List;
@@ -35,6 +35,7 @@ public class PlotterWIN {
             System.err.println("Fail: " + e);
         }
     }
+
 
     public String[] genScript(){
 
